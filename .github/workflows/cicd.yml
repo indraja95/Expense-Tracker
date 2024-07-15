@@ -14,17 +14,17 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t indraja95/Expense-Tracker .
+        run: docker build -t indraja95/expense-tracker .
       - name: Publish image to docker hub
-        run: docker push indraja95/Expense-Tracker:latest   
+        run: docker push indraja95/expense-tracker:latest   
 
   deploy: 
     needs: build
     runs-on: aws-ec2    
     steps:
       - name: Pull image from docker hub
-        run: docker pull indraja95/Expense-Tracker:latest 
+        run: docker pull indraja95/expense-tracker:latest 
       - name: Delete Old Container
         run: docker rm -f reactContainer
       - name: Run docker container
-        run: docker run -d -p 3000:80 --name reactContainer indraja95/Expense-Tracker   
+        run: docker run -d -p 3000:80 --name reactContainer indraja95/expense-tracker   
